@@ -19,18 +19,19 @@ export class WeatherService {
   
   constructor(private _http: HttpClient) { }
 
-  retrieveWeather():Observable <any>{
-    //console.log('WEATHER SERVICE');
-    return this._http.get(this.base+'seattle'+'&units=imperial&&appid=6dcd95f30b489dd2c037cfddd37c3853')
-    .pipe(
-      tap(val => {
-        console.log(`humidity ${val.main.humidity}`)
-        console.log(`Temp avg ${(val.main.temp_max-val.main.temp_min)/2}`)
-        console.log(`Temp high ${val.main.temp_max}`)
-        console.log(`Temp low ${val.main.temp_min}`)
-        console.log(`status ${val.weather[0].main}`)
+  retrieveWeather(){
+    console.log('WEATHER SERVICE');
+    this._http.get(this.base+'seattle'+'&units=imperial&&appid=6dcd95f30b489dd2c037cfddd37c3853').subscribe(
+      (weather: any[]) => {this.weather$.next(weather);}
+    // .pipe(
+    //   tap(val => {
+    //     console.log(`humidity ${val.main.humidity}`)
+    //     console.log(`Temp avg ${(val.main.temp_max-val.main.temp_min)/2}`)
+    //     console.log(`Temp high ${val.main.temp_max}`)
+    //     console.log(`Temp low ${val.main.temp_min}`)
+    //     console.log(`status ${val.weather[0].main}`)
 
-      }));
+    //   }));
     // .subscribe(
       
     //   // (weatherArray:any[])=> {this.weatherArray$.next(weatherArray);}

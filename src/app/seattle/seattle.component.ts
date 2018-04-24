@@ -8,20 +8,34 @@ import { WeatherService } from '../weather.service';
   styleUrls: ['./seattle.component.css']
 })
 export class SeattleComponent implements OnInit {
-  //weatherData:any[]=[];
-  weatherData:{};
+  weatherData:any[]=[];
+ 
+  
+  // weatherData:{};
   constructor(private _weatherService: WeatherService) { }
   //constructor() { }
+ 
+  ngOnInit(){
+    this._weatherService.retrieveWeather().subscribe(val=>this.weatherData = val);
+  }
   
+  // ngOnInit() {
+  //   this._weatherService.weather$.subscribe(
+  //     (val) => {this.weatherData = val;}
+  //   )
+  // }
 
-  ngOnInit() {
-    this._weatherService.weather$.subscribe(
-      (val) => {this.weatherData = val}
-    );
-  }
+  // ngOnInit() {
+  //   this._weatherService.weatherArray$.subscribe(
+  //     (val) => {this.weatherData = val}
+  //   );
 
-  getWeather(){
-    this._weatherService.retrieveWeather();
-  }
+
+  // }
+
+  // getWeather(){
+  //   this._weatherService.retrieveWeather();
+  // }
+
 
 }
