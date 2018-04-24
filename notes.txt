@@ -26,4 +26,62 @@ REMINDER: When building applications which include forms and http requests, be s
 1) start new project
 ng new WeatherForecast
 
-2) create
+2) create a few components
+cd..../WeatherForecast
+ng g c seattle
+ng g c sanjose
+
+3) create routes to simply check for correct routing
+
+app-routing.moudule.ts
+put in the routes
+const routes: Routes = [{}];
+
+: Routes = [
+  {
+    //define rules
+    //root will go to SeattleComponent.
+    path:'',
+    pathMatch: 'full',
+    component: SeattleComponent,
+    children:[]
+  },
+  //and so on for other components but with path values like 'sanjose'
+
+4) create routelinks in app.component.html
+<!-- go to root which is Seattle-->
+<a [routerLink] = "['']">Seattle, WA</a> 
+<!-- go to home -->
+<a [routerLink] = "['sanjose']">San Jose, CA</a> 
+
+--APP MODULE NEEDS HTTPCLIENT
+
+5) the service needs to make the api calls and return the promise to any component the invokes its methods so that...
+    a city view can retrieve that promise from a service and update itself with the new data from the api call.
+    
+    a) - get the service - 
+        1) ng generate service weather
+        2) Register our Service with our app.modules.ts file
+
+    b) -in the service-
+    make the api calls and return the promise
+    
+    import { Injectable } from '@angular/core';
+    import { BehaviorSubject } from 'Rxjs';
+    import { HttpClient, HttpParams } from '@angular/common/http';
+    import {Observable} from 'rxjs/Observable';
+
+    Injectable()
+    export class DataService {
+        private base = `https://...`
+        temperature:number;
+        temperature$ = new BehaviorSubject (0);
+
+    constructor(private _http: HttpClient) { }
+
+    retrieveWeather(city:String){
+    this._http.get<any[]>(this.base+`${city}`+'/something').subscribe(
+      (weatherArray:any[])=> {this.weatherArray$.next(weatherArray);}
+    )
+  }
+
