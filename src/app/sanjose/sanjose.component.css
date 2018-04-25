@@ -1,0 +1,13 @@
+.weatherDisplay{
+    
+    background-image: url('../../assets/sanjose.jpg');
+    background-size:cover; width:auto;
+    height:30em;
+}
+
+.weatherText{
+    color: white;
+    font-style: bold;
+    margin-top: 20px;
+    padding: 5px 0px 0px 20px;
+}
