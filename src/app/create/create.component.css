@@ -1,0 +1,77 @@
+.wrapper{
+    border: 2px solid black;
+    margin: 5px;
+    padding: 10px;
+}
+.card {display:inline-block;}
+
+.container{
+    width:600px;
+}
+
+.jumbotron{
+    background-color: blue;
+    border: 5px solid black;
+    color: white;
+    text-align: center;
+}
+
+.forecast-wrapper{
+    border:5px;
+}
+
+.day1Max{
+    display: inline-block; 
+    vertical-align: top;
+    font-size: 120px;
+    padding:0px;
+    margin:0px 0px 10px 0px;
+    line-height: 100px;
+}
+.day1Other{
+    display: inline-block; 
+    vertical-align: top;
+    padding-top:5px;
+    margin:0px;
+    line-height: 20px;
+    text-align: left;
+    line-height: 10px;
+}
+
+.jumbotron-5day{
+    border: 0px;
+    padding: 0px;
+    margin:0px;
+    text-align:center;
+    background-color:white;
+    color:black;
+    width:auto;
+}
+
+.col-sm-4{
+    width:0;
+    margin:auto;
+    text-align: center;
+}
+
+.row{
+    width:200px;
+    margin:auto;
+    text-align: center;
+}
+
+.table{
+    background-color: orange;
+    border: 5px solid;
+    color: black;
+}
+
+.form-inline{
+    width:auto;
+    
+}
+
+h1{
+    display: inline-block; 
+    vertical-align: top;
+}

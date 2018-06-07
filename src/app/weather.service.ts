@@ -1,49 +1,43 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'Rxjs';
+import { BehaviorSubject, range } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { tap, map} from 'rxjs/operators';
 import { Weather } from './weather';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { HighlightDelayBarrier } from 'blocking-proxy/built/lib/highlight_delay_barrier';
 
 @Injectable()
 export class WeatherService {
-  private base = `http://api.openweathermap.org/data/2.5/weather?q=`
-  // temperature:number;
-  // temperature$ = new BehaviorSubject (0);
-  // weatherArray$ = new BehaviorSubject([]);
-  // weather$=new BehaviorSubject({});
+  private base = `http://api.openweathermap.org/data/2.5/forecast?q=`
 
-  // weather$: BehaviorSubject<any[]> = new BehaviorSubject([]);
-
-
+  fiveDay=[];
   
   constructor(private _http: HttpClient) { }
-
-  retrieveWeather(city:string):Observable <Weather>{
-    //console.log('WEATHER SERVICE');
-    return this._http.get<Weather>(`${this.base}+${city}+&units=imperial&&appid=6dcd95f30b489dd2c037cfddd37c3853`)
+  retrieveWeather(city:string):Observable <Weather[]>{
+    var highTemp;
+    var tempReading;
+    console.log('WEATHER SERVICE');
+    console.log(city);
+    return this._http.get<Weather>(`${this.base}+${city}&appid=6dcd95f30b489dd2c037cfddd37c3853&units=imperial`)
     .pipe(
       map((val:any ) => {
-      // tap((val:any ) => {
-    //     console.log(`humidity ${val.main.humidity}`)
-    //     console.log(`Temp avg ${(val.main.temp_max-val.main.temp_min)/2}`)
-    //     console.log(`Temp high ${val.main.temp_max}`)
-    //     console.log(`Temp low ${val.main.temp_min}`)
-    //     console.log(`status ${val.weather[0].main}`)
-          return new Weather(val.main.humidity, val.main.temp_max, val.main.temp_min, val.weather[0].main);
-    
-        // return { 
-        //   humidity: val.main.humidity,
-        //   highTemp: val.main.temp_max,
-        //   lowTemp: val.main.temp_min,
-        //   status: val.weather[0].main
-        //  }
-      }));
+        console.log(val.list)
+        console.log(val.list.length)
 
-     
-    // .subscribe(
-      
-    //   // (weatherArray:any[])=> {this.weatherArray$.next(weatherArray);}
+        let index = 0;
+        for (let i = 0; i<val.list.length; i = i+8){
+          let desc = val.list[i].weather[0].description.replace(/"/g,"");
+          console.log(`desc is ${desc}`);
+          const foreCast = new Weather(val.list[i].dt_txt, Math.round(val.list[i].main.humidity), Math.round(val.list[i].main.temp_max), Math.round(val.list[i].main.temp_min), desc)
+          console.log(`foreCast is ${foreCast.description}`);
+          this.fiveDay[index] = foreCast
+          console.log(`${i} ${this.fiveDay[index].description}`);
+          index+=1;
+        }
+        console.log(this.fiveDay);
+        return (this.fiveDay);
+      }));
   }
  }
 

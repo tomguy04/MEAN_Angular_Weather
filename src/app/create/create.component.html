@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+      
+        <div class = 'jumbotron'>
+          
+          <form name = 'cityInput' (submit)="onSubmit(form)" #form='ngForm' class="form-inline justify-content-center form-group"  >
+            City : 
+              <input 
+                type="text"
+                name="city"
+                required
+                minlength="1"
+                [(ngModel)]="city.name"
+                #name='ngModel'
+                class = 'form-control'
+              />
+          
+              <button type="submit"  [disabled]="form.invalid" class="invisible">Submit</button>
+            </form>
+           
+          
+          
+          <div  *ngIf='weatherData.length>0'>
+            <div class = 'day1Max'>{{weatherData[0].highTemp|json}}&#176;</div>
+            <div class = 'day1Other'>
+              <p>F</p>
+              <p>{{weatherData[0].description|json}}</p>
+              <p>{{weatherData[0].humidity|json}} % humidity</p></div>
+          </div>
+
+          <div class = 'jumbotron jumbotron-5day'>
+            <div class="row">
+            <div *ngFor = 'let day of weatherData'>
+                <div class="col-sm-4">{{day.day | date : 'EEE'}}</div>
+                <div class="col-sm-4">{{day.highTemp}}</div>
+                <div class="col-sm-4">{{day.lowTemp}}</div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
+
